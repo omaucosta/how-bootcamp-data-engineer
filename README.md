@@ -4,7 +4,7 @@ Atividades e desafios que foram realizados durante o bootcamp
 # Módulos
 
 1 - Introdução à Engenharia de Dados <br />
-2 - Fundamentos de Ingestão de Dados br />
+2 - Fundamentos de Ingestão de Dados <br />
 3 - SQL <br />
 4 - Capturando dados de uma API <br />
 5 - Capturando dados com crawlers <br />
