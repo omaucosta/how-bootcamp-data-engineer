@@ -1,8 +1,8 @@
 import datetime
 from unittest.mock import mock_open, patch
 import pytest
-from ingestors import DataIngestor
-from writers import DataWriter
+from mercado_bitcoin.ingestors import DataIngestor
+from mercado_bitcoin.writers import DataWriter
 
 # created fixture
 @pytest.fixture
