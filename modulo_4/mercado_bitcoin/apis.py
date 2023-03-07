@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import logging
 import ratelimit
 import requests
-from backoff import on_exception, expo
+from backoff import on_exception, expo, constant
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -20,8 +20,8 @@ class MercadoBitcoinApi(ABC):
     def _get_endpoint(self, **kwargs) -> str:
         pass
 
-    @on_exception(expo, ratelimit.exception.RateLimitException, max_tries=10)
-    @ratelimit.limits(calls=29, period=30)
+    @on_exception(constant, ratelimit.exception.RateLimitException, max_tries=10)
+    @ratelimit.limits(calls=30, period=30)
     @on_exception(expo, requests.exceptions.HTTPError, max_tries=10)
     def get_data(self, **kwargs) -> dict:
         endpoint = self._get_endpoint(**kwargs)
@@ -46,7 +46,7 @@ class TradesApi(MercadoBitcoinApi):
 
     def _get_endpoint(self, date_from: datetime.datetime = None, date_to: datetime.datetime = None) -> str:
         if date_from and not date_to:
-            unix_date_from = self._get_unix_epoch(date_from) # convertendo a data para o formato unix
+            unix_date_from = self._get_unix_epoch(date_from)
             endpoint = f'{self.base_endpoint}/{self.coin}/{self.type}/{unix_date_from}'
         elif date_from and date_to:
             if date_from > date_to:
